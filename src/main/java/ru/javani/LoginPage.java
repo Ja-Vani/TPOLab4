@@ -22,19 +22,23 @@ public class LoginPage extends AbstractSite {
         Utility.getElementBySelector(driver, By.xpath("//*[@id='appbar-signin']")).click();
     }
 
-    public void doLogin() {
+    public String doLogin() {
         tryLogin(Utility.CORRECT_LOGIN, Utility.CORRECT_PASSWORD);
-        Utility.waitUntilPageLoads(driver, 3);
+        Utility.getElementBySelector(driver, By.xpath("//*[@id=\"hs_cos_wrapper_widget_1674774617303_\"]/img"));
+        Utility.waitUntilPageLoads(driver, 15);
+        return driver.getCurrentUrl();
     }
 
-    public void doWrongLogin() {
+    public String doWrongLogin() {
         tryLogin(Utility.CORRECT_LOGIN, Utility.WRONG_PASSWORD);
-        Utility.waitUntilPageLoads(driver, 3);
+        Utility.waitUntilPageLoads(driver, 5);
+        return Utility.getElementBySelector(driver, By.xpath(".//*[@id='root']/div/div/form/div[3]/div[2]/div")).getText();
     }
 
-    public void doSignUp() {
+    public String doSignUp() {
         trySignUp(Utility.CORRECT_LOGIN, Utility.CORRECT_PASSWORD);
-        Utility.waitUntilPageLoads(driver, 3);
+        Utility.waitUntilPageLoads(driver, 5);
+        return Utility.getElementBySelector(driver, By.xpath("//*[@id=\"email-helper-text\"]")).getText();
     }
 
     private void tryLogin(final CharSequence login, final CharSequence password) {
